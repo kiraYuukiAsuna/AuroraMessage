@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30204.135
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AuroraMessageServer", "AuroraMessageServer\AuroraMessageServer.vcxproj", "{CDB24635-E81A-483D-916C-C3BF41F72F78}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AuroraMessageClient", "AuroraMessageClient\AuroraMessageClient.vcxproj", "{3FEEBB4B-86B2-42D5-9726-7F1E6C8D466C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CDB24635-E81A-483D-916C-C3BF41F72F78}.Debug|x64.ActiveCfg = Debug|x64
+		{CDB24635-E81A-483D-916C-C3BF41F72F78}.Debug|x64.Build.0 = Debug|x64
+		{CDB24635-E81A-483D-916C-C3BF41F72F78}.Release|x64.ActiveCfg = Release|x64
+		{CDB24635-E81A-483D-916C-C3BF41F72F78}.Release|x64.Build.0 = Release|x64
+		{3FEEBB4B-86B2-42D5-9726-7F1E6C8D466C}.Debug|x64.ActiveCfg = Debug|x64
+		{3FEEBB4B-86B2-42D5-9726-7F1E6C8D466C}.Debug|x64.Build.0 = Debug|x64
+		{3FEEBB4B-86B2-42D5-9726-7F1E6C8D466C}.Release|x64.ActiveCfg = Release|x64
+		{3FEEBB4B-86B2-42D5-9726-7F1E6C8D466C}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1CC1AA44-E091-42FA-9C2F-C78FAF1AC128}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="internet">
+      <UniqueIdentifier>{5dbbbb86-5488-4f5d-8407-4ba972682bbe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="tools">
+      <UniqueIdentifier>{b95fca15-6951-45c7-b299-af0a410f0243}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main">
+      <UniqueIdentifier>{5d6f9094-4550-473e-b652-20056a4290be}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="internet\internet.cpp">
+      <Filter>internet</Filter>
+    </ClCompile>
+    <ClCompile Include="main\main.cpp">
+      <Filter>main</Filter>
+    </ClCompile>
+    <ClCompile Include="tools\config.cpp">
+      <Filter>tools</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="tools\config.h">
+      <Filter>tools</Filter>
+    </ClInclude>
+    <ClInclude Include="internet\internet.h">
+      <Filter>internet</Filter>
+    </ClInclude>
+    <ClInclude Include="tools\json.hpp">
+      <Filter>tools</Filter>
+    </ClInclude>
+    <ClInclude Include="main\main.h">
+      <Filter>main</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
