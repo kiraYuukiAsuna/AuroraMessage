@@ -58,7 +58,7 @@ int Internet::cleanUp()
 	return 0;
 }
 
-DWORD WINAPI heartBeatProcess(LPVOID lpParameter)//parameter²ÎÊý
+DWORD WINAPI heartBeatProcess(LPVOID lpParameter)
 {
 	SOCKET *clientSocket = (SOCKET*)lpParameter;
 	
