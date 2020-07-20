@@ -1,2 +1,2 @@
 # AuroraMessage
-AuroraMessage is an open source communicate application
+AuroraMessage is an open source communication application
