@@ -61,5 +61,5 @@ int Internet::cleanUp()
 DWORD WINAPI heartBeatProcess(LPVOID lpParameter)
 {
 	SOCKET *clientSocket = (SOCKET*)lpParameter;
-	
+	return 0;
 }

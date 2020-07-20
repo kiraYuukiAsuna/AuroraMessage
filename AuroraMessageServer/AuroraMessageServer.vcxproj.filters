@@ -10,6 +10,9 @@
     <Filter Include="main">
       <UniqueIdentifier>{5d6f9094-4550-473e-b652-20056a4290be}</UniqueIdentifier>
     </Filter>
+    <Filter Include="mysqlManager">
+      <UniqueIdentifier>{4c231320-6981-483f-9698-4e66c5df4eb8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="internet\internet.cpp">
@@ -20,6 +23,9 @@
     </ClCompile>
     <ClCompile Include="tools\config.cpp">
       <Filter>tools</Filter>
+    </ClCompile>
+    <ClCompile Include="mysqlManager\mysqlManager.cpp">
+      <Filter>mysqlManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -34,6 +40,9 @@
     </ClInclude>
     <ClInclude Include="main\main.h">
       <Filter>main</Filter>
+    </ClInclude>
+    <ClInclude Include="mysqlManager\mysqlManager.h">
+      <Filter>mysqlManager</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

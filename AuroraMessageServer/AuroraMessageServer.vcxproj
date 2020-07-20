@@ -45,9 +45,11 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
+    <LibraryPath>D:\CodeData\VisualStudio\AuroraMessage\AuroraMessageServer\mysqlManager\mysql8.0.19\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
+    <LibraryPath>D:\CodeData\VisualStudio\AuroraMessage\AuroraMessageServer\mysqlManager\mysql8.0.19\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -80,11 +82,13 @@
   <ItemGroup>
     <ClCompile Include="internet\internet.cpp" />
     <ClCompile Include="main\main.cpp" />
+    <ClCompile Include="mysqlManager\mysqlManager.cpp" />
     <ClCompile Include="tools\config.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="internet\internet.h" />
     <ClInclude Include="main\main.h" />
+    <ClInclude Include="mysqlManager\mysqlManager.h" />
     <ClInclude Include="tools\config.h" />
     <ClInclude Include="tools\json.hpp" />
   </ItemGroup>
