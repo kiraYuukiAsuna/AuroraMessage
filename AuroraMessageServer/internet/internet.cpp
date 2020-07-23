@@ -25,7 +25,7 @@ Internet::~Internet()
 
 int Internet::startSocket()
 {
-	bind(serverSocket, (sockaddr*)&socketaddr, sizeof(socketaddr));
+	bind(serverSocket, (SOCKADDR*)&socketaddr, sizeof(socketaddr));
 	listen(serverSocket, 20);
 	return 0;
 }
@@ -33,10 +33,15 @@ int Internet::startSocket()
 Internet::ClientResource* Internet::Accept()
 {
 	ClientResource* clientResource = new ClientResource;
-	DWORD threadId;
-	int size = sizeof(clientResource->clientaddr);
-	SOCKET clientsocket = accept(serverSocket, (SOCKADDR*)&clientResource->clientaddr, &size);
-	return clientResource;
+	int size = sizeof(clientResource->clientAddress);
+	SOCKET clientSocket = accept(serverSocket, (SOCKADDR*)&clientResource->clientAddress, &size);
+	clientResource->clientSocket = clientSocket;
+	if (clientResource->clientSocket != NULL)
+	{
+		clientTable.ClientResource.push_back(*clientResource);
+		return clientResource;
+	}
+	return nullptr;
 }
 
 int Internet::Send(SOCKET clientSocket, char* sendBuffer, int bufferSize)
@@ -62,4 +67,14 @@ DWORD WINAPI heartBeatProcess(LPVOID lpParameter)
 {
 	SOCKET *clientSocket = (SOCKET*)lpParameter;
 	return 0;
+}
+
+Internet::ClientResource::ClientResource()
+{
+	threadID = 0;
+	clientSocket = 0;
+	memset(&clientAddress, 0, sizeof(clientAddress));
+	memset(sendBuffer, 0, sizeof(sendBuffer));
+	memset(recieveBuffer, 0, sizeof(sendBuffer));
+	uid = 0;
 }

@@ -7,6 +7,7 @@
 #include<WinSock2.h>
 #include<Windows.h>
 #include<WS2tcpip.h>
+#include<vector>
 
 #pragma comment(lib,"ws2_32.lib")
 
@@ -21,11 +22,6 @@ private:
 	WSADATA wsadata;
 	SOCKET serverSocket = NULL;
 	sockaddr_in socketaddr;
-
-	struct ClientTable
-	{
-
-	};
 
 public:
 
@@ -43,11 +39,21 @@ public:
 	{
 		int threadID;
 		SOCKET clientSocket;
-		SOCKADDR clientaddr;
-		int userID;
+		sockaddr_in clientAddress;
 		char sendBuffer[BUFFERSIZE];
-		char receiveBuffer[BUFFERSIZE];
+		char recieveBuffer[BUFFERSIZE];
+		int uid;
+
+		ClientResource();
 	};
+
+	struct ClientTable
+	{
+		std::vector<ClientResource>ClientResource;
+
+	};
+
+	ClientTable clientTable;
 
 	/************************************************************
 	* FunctionName:Internet
@@ -90,7 +96,6 @@ public:
 	* Function:清理服务器socket及WSADATA
 	************************************************************/
 	int cleanUp();
-
 };
 
 /************************************************************

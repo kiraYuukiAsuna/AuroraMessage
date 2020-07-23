@@ -1,5 +1,8 @@
 #include"mysql8.0.19/include/mysql.h"
 
+//Á´½Ó¿âÎÄ¼þ
+#pragma comment(lib,"libmysql.lib")
+
 class MYSQLMANAGER {
 private:
 

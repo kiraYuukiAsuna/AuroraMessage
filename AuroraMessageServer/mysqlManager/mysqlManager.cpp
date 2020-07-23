@@ -67,9 +67,11 @@ bool MYSQLMANAGER::freeResult()
 {
 	mysql_free_result(result);     //释放结果集所占用的内存
 	result = 0;
+	return true;
 }
 
 bool MYSQLMANAGER::close()
 {
 	mysql_close(&mysqlHandler);
+	return true;
 }
