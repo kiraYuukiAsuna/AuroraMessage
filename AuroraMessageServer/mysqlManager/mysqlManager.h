@@ -6,8 +6,7 @@
 class MYSQLMANAGER {
 private:
 
-	struct connectInfo
-	{
+	struct connectInfo {
 		char* ip;
 		int port;
 		char* user;

@@ -13,6 +13,9 @@
     <Filter Include="mysqlManager">
       <UniqueIdentifier>{4c231320-6981-483f-9698-4e66c5df4eb8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Documents">
+      <UniqueIdentifier>{3a3cb3b5-b251-410c-bf03-107aa62f0ac1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="internet\internet.cpp">
@@ -26,6 +29,9 @@
     </ClCompile>
     <ClCompile Include="mysqlManager\mysqlManager.cpp">
       <Filter>mysqlManager</Filter>
+    </ClCompile>
+    <ClCompile Include="tools\log.cpp">
+      <Filter>tools</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -44,5 +50,13 @@
     <ClInclude Include="mysqlManager\mysqlManager.h">
       <Filter>mysqlManager</Filter>
     </ClInclude>
+    <ClInclude Include="tools\log.h">
+      <Filter>tools</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Documents\CodeStyle.md">
+      <Filter>Documents</Filter>
+    </None>
   </ItemGroup>
 </Project>

@@ -9,8 +9,7 @@
 #include <map>
 #include<string>
 
-class Config
-{
+class Config {
 private:
 
 	int   writeFile(const char* filename = NULL);

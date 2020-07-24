@@ -86,6 +86,7 @@
     <ClCompile Include="main\main.cpp" />
     <ClCompile Include="mysqlManager\mysqlManager.cpp" />
     <ClCompile Include="tools\config.cpp" />
+    <ClCompile Include="tools\log.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="internet\internet.h" />
@@ -93,6 +94,10 @@
     <ClInclude Include="mysqlManager\mysqlManager.h" />
     <ClInclude Include="tools\config.h" />
     <ClInclude Include="tools\json.hpp" />
+    <ClInclude Include="tools\log.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Documents\CodeStyle.md" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

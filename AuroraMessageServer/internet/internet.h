@@ -25,8 +25,7 @@ private:
 
 public:
 
-	enum ERRORCODE
-	{
+	enum ERRORCODE {
 		BINDERROR,
 		LISTENERROR,
 		ACCEPTERROR,
@@ -35,8 +34,7 @@ public:
 
 	};
 
-	struct ClientResource
-	{
+	struct ClientResource {
 		int threadID;
 		SOCKET clientSocket;
 		sockaddr_in clientAddress;
@@ -47,8 +45,7 @@ public:
 		ClientResource();
 	};
 
-	struct ClientTable
-	{
+	struct ClientTable {
 		std::vector<ClientResource>ClientResource;
 
 	};
