@@ -4,6 +4,8 @@
 *FileName:internet.h
 *Function:socket tcp 封装
 ************************************************************/
+#define _CRT_SECURE_NO_WARNINGS
+
 #include<WinSock2.h>
 #include<Windows.h>
 #include<WS2tcpip.h>
@@ -14,8 +16,6 @@
 class Internet {
 private:
 
-	static const int BUFFERSIZE = 512;
-
 	char* serverIP;
 	int serverPort;
 
@@ -24,6 +24,8 @@ private:
 	sockaddr_in socketaddr;
 
 public:
+
+	static const int BUFFERSIZE = 512;
 
 	enum ERRORCODE {
 		BINDERROR,
@@ -56,7 +58,7 @@ public:
 	* FunctionName:Internet
 	* Function:类的构造函数
 	************************************************************/
-	Internet(const char* serverIP, const int serverPort);
+	Internet(char* serverIP, int serverPort);
 
 	/************************************************************
 	* FunctionName:~Internet
@@ -93,6 +95,23 @@ public:
 	* Function:清理服务器socket及WSADATA
 	************************************************************/
 	int cleanUp();
+};
+
+class Network {
+
+private:
+
+	Internet::ClientResource* clientResource;
+
+public:
+
+	Network(Internet::ClientResource* clientResource);
+
+	int recieveData();
+
+	int sendData(const char* data);
+
+	char* getRecievedData();
 };
 
 /************************************************************

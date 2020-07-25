@@ -6,7 +6,7 @@
 ************************************************************/
 #include"internet.h"
 
-Internet::Internet(const char* serverIP, const int serverPort) {
+Internet::Internet(char* serverIP, int serverPort) {
 	this->serverIP = (char*)serverIP;
 	this->serverPort = serverPort;
 	WSAStartup(MAKEWORD(2, 2), &wsadata);
@@ -67,4 +67,22 @@ Internet::ClientResource::ClientResource() {
 	memset(sendBuffer, 0, sizeof(sendBuffer));
 	memset(recieveBuffer, 0, sizeof(sendBuffer));
 	uid = 0;
+}
+
+Network::Network(Internet::ClientResource* clientResource) {
+	this->clientResource = clientResource;
+}
+
+int Network::recieveData() {
+	return recv(clientResource->clientSocket, clientResource->recieveBuffer, Internet::BUFFERSIZE, 0);
+}
+
+int Network::sendData(const char* data) {
+	memset(clientResource->sendBuffer, 0, Internet::BUFFERSIZE);
+	strcpy(clientResource->sendBuffer, data);
+	return send(clientResource->clientSocket, clientResource->sendBuffer, Internet::BUFFERSIZE, 0);
+}
+
+char* Network::getRecievedData() {
+	return clientResource->recieveBuffer;
 }
