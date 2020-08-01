@@ -45,13 +45,13 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <LibraryPath>D:\CodeData\VisualStudio\AuroraMessage\AuroraMessageServer\mysqlManager\mysql8.0.19\lib;$(LibraryPath)</LibraryPath>
-    <IncludePath>D:\CodeData\VisualStudio\AuroraMessage\AuroraMessageServer\mysqlManager\mysql8.0.19\include;$(IncludePath)</IncludePath>
+    <LibraryPath>.\mysqlManager\mysql8.0.19\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>.\mysqlManager\mysql8.0.19\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <LibraryPath>D:\CodeData\VisualStudio\AuroraMessage\AuroraMessageServer\mysqlManager\mysql8.0.19\lib;$(LibraryPath)</LibraryPath>
-    <IncludePath>D:\CodeData\VisualStudio\AuroraMessage\AuroraMessageServer\mysqlManager\mysql8.0.19\include;$(IncludePath)</IncludePath>
+    <LibraryPath>.\mysqlManager\mysql8.0.19\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>.\mysqlManager\mysql8.0.19\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>

@@ -53,6 +53,9 @@ int main(int argc, char* argv[]) {
 DWORD WINAPI clientProcess(LPVOID lpParameter) {
 	Network net((Internet::ClientResource*)lpParameter);
 
+
+
+
 	char* logFileDirectory = (char*)"./";
 	char* logFileName = (char*)"clientProcess.txt";
 	LOG* log = new LOG(logFileDirectory, logFileName);
