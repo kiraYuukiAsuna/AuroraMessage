@@ -74,6 +74,7 @@ Network::Network(Internet::ClientResource* clientResource) {
 }
 
 int Network::recieveData() {
+	memset(clientResource->recieveBuffer, 0, Internet::BUFFERSIZE);
 	return recv(clientResource->clientSocket, clientResource->recieveBuffer, Internet::BUFFERSIZE, 0);
 }
 

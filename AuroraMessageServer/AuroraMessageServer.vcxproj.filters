@@ -16,6 +16,9 @@
     <Filter Include="Documents">
       <UniqueIdentifier>{3a3cb3b5-b251-410c-bf03-107aa62f0ac1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="core">
+      <UniqueIdentifier>{e527e8bb-3507-4a55-855e-8ab3678834bb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="internet\internet.cpp">
@@ -33,13 +36,16 @@
     <ClCompile Include="tools\log.cpp">
       <Filter>tools</Filter>
     </ClCompile>
+    <ClCompile Include="core\core.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="core\datastruct.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="tools\config.h">
       <Filter>tools</Filter>
-    </ClInclude>
-    <ClInclude Include="internet\internet.h">
-      <Filter>internet</Filter>
     </ClInclude>
     <ClInclude Include="tools\json.hpp">
       <Filter>tools</Filter>
@@ -52,6 +58,15 @@
     </ClInclude>
     <ClInclude Include="tools\log.h">
       <Filter>tools</Filter>
+    </ClInclude>
+    <ClInclude Include="core\core.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="core\datastruct.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="internet\internet.h">
+      <Filter>internet</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

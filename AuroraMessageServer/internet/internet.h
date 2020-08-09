@@ -4,6 +4,8 @@
 *FileName:internet.h
 *Function:socket tcp ·â×°
 ************************************************************/
+#pragma once
+
 #define _CRT_SECURE_NO_WARNINGS
 
 #include<WinSock2.h>

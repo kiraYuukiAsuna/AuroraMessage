@@ -82,6 +82,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="core\core.cpp" />
+    <ClCompile Include="core\datastruct.cpp" />
     <ClCompile Include="internet\internet.cpp" />
     <ClCompile Include="main\main.cpp" />
     <ClCompile Include="mysqlManager\mysqlManager.cpp" />
@@ -89,6 +91,8 @@
     <ClCompile Include="tools\log.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="core\core.h" />
+    <ClInclude Include="core\datastruct.h" />
     <ClInclude Include="internet\internet.h" />
     <ClInclude Include="main\main.h" />
     <ClInclude Include="mysqlManager\mysqlManager.h" />

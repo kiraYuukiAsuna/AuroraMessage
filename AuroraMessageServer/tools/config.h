@@ -4,6 +4,8 @@
 *FileName:config.h
 *Function:ÅäÖÃÎÄ¼ş¶ÁÈ¡
 ************************************************************/
+#pragma once
+
 #include <stdio.h>  //for snprintf
 #include <string.h>
 #include <map>

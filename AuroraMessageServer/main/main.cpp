@@ -2,6 +2,8 @@
 
 //函数声明
 DWORD WINAPI clientProcess(LPVOID lpParameter);
+DWORD WINAPI clientDataRecieveThread(LPVOID lpParameter);
+DWORD WINAPI clientDataSendThread(LPVOID lpParameter);
 
 /************************************************************
  * FunctionName:main
@@ -40,31 +42,101 @@ int main(int argc, char* argv[]) {
 			log->print("sendBuffer:" + *clientResource->sendBuffer);
 			log->print("recieveBuffer:" + *clientResource->recieveBuffer);
 
-			CreateThread(NULL, 0, &clientProcess, clientResource, 0, NULL);
+			CreateThread(NULL, 0, clientProcess, clientResource, 0, NULL);
 
 			log->print("threadID:" + std::to_string(clientResource->threadID));
 			log->print("uid:" + std::to_string(clientResource->uid));
+
+			clientResource = nullptr;
 		} else {
 			log->print("Accept error!");
 		}
+		Sleep(1);
 	}
 }
 
 DWORD WINAPI clientProcess(LPVOID lpParameter) {
 	Network net((Internet::ClientResource*)lpParameter);
+	Network* ptr_net = &net;
 
+	//线程是否结束原子变量
+	std::atomic<bool>clientDataRecieveThreadRunningState(false);
+	std::atomic<bool>clientDataSendThreadRunningState(false);
 
+	//传给线程的参数
+	Parameter parameterRecieve;
+	Parameter* parameterRecieve_ptr = &parameterRecieve;
+	parameterRecieve.ptr_net = &net;
+	parameterRecieve.state = &clientDataRecieveThreadRunningState;
 
+	Parameter parameterSend;
+	Parameter* parameterSend_ptr = &parameterSend;
+	parameterSend.ptr_net = &net;
+	parameterSend.state = &clientDataSendThreadRunningState;
 
-	char* logFileDirectory = (char*)"./";
-	char* logFileName = (char*)"clientProcess.txt";
-	LOG* log = new LOG(logFileDirectory, logFileName);
+	//创建线程
+	HANDLE handleForRecieveThread = nullptr;
+	HANDLE handleForSendThread = nullptr;
 
-	net.recieveData();
-	char* str=net.getRecievedData();
-	log->printToFile(str);
+	handleForRecieveThread=CreateThread(NULL, 0, clientDataRecieveThread, parameterRecieve_ptr, 0, NULL);
+	clientDataRecieveThreadRunningState = true;
+	handleForSendThread=CreateThread(NULL, 0, clientDataSendThread, parameterSend_ptr, 0, NULL);
+	clientDataSendThreadRunningState = true;
 
-	net.sendData("Hello world!");
+	//等待创建的子线程结束后退出此线程
+	if (handleForRecieveThread != 0 && handleForSendThread != 0) {
+		while (true) {
+			if (WaitForSingleObject(handleForRecieveThread, INFINITE) == WAIT_OBJECT_0 || WaitForSingleObject(handleForSendThread, INFINITE) == WAIT_OBJECT_0) {
+				clientDataRecieveThreadRunningState = false;
+				clientDataSendThreadRunningState = false;
+				if ((WaitForSingleObject(handleForRecieveThread, INFINITE) == WAIT_OBJECT_0) && (WaitForSingleObject(handleForSendThread, INFINITE) == WAIT_OBJECT_0)) {
+					break;
+				}
+			}
+		}
+	}
 
+	return 0;
+}
+
+//接受客户端数据处理线程
+DWORD WINAPI clientDataRecieveThread(LPVOID lpParameter) {
+	Parameter* ptr_parameter = (Parameter*)lpParameter;
+	while (*ptr_parameter->state) {
+		if (ptr_parameter->ptr_net->recieveData() > 0) {//接收到数据
+			std::cout << "on recv" << std::endl;
+			char* logFileDirectory = (char*)"./";
+			char* logFileName = (char*)"clientProcess.txt";
+			LOG log(logFileDirectory, logFileName);
+			char* str = ptr_parameter->ptr_net->getRecievedData();
+			log.print(str);
+
+		} else if (ptr_parameter->ptr_net->recieveData() == 0) {//客户端断开连接
+			*ptr_parameter->state = false;
+		} else if (ptr_parameter->ptr_net->recieveData() < 0) {//接受异常
+			*ptr_parameter->state = false;
+		}
+	}
+	return 0;
+}
+
+//向客户端发送数据处理线程
+DWORD WINAPI clientDataSendThread(LPVOID lpParameter) {
+	Parameter* ptr_parameter = (Parameter*)lpParameter;
+	while (*ptr_parameter->state) {
+
+		HANDLE eventHandle = nullptr;
+		CreateEvent(NULL, TRUE, TRUE, NULL);//复位方式为手动恢复到无信号状态，且初始状态为有信号.
+
+		//SetEvent()
+		//ResetEvent()
+
+		//TODO
+		/*
+		if () {
+			ptr_parameter->ptr_net->sendData("Hello world!");
+		}
+		*/
+	}
 	return 0;
 }
