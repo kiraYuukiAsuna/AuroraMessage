@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using AuroraMessageClientGui;
 
 namespace AuroraMessageClientGui
 {
@@ -23,6 +24,25 @@ namespace AuroraMessageClientGui
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            if (userID.Text != "")
+            {
+                if (userPassword.Password != "")
+                {
+
+                }
+                else
+                {
+                    MessageBox.Show("密码不能为空！", "错误！");
+                }
+            }
+            else
+            {
+                MessageBox.Show("账号不能为空！","错误！");
+            }
         }
     }
 }

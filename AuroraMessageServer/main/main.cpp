@@ -56,40 +56,24 @@ int main(int argc, char* argv[]) {
 }
 
 DWORD WINAPI clientProcess(LPVOID lpParameter) {
+	ClientProcessParameter clientProcessParameter;
 	Network net((Internet::ClientResource*)lpParameter);
-	Network* ptr_net = &net;
+	ClientProcessParameter* clientProcessParameter_ptr = &clientProcessParameter;
 
-	//线程是否结束原子变量
-	std::atomic<bool>clientDataRecieveThreadRunningState(false);
-	std::atomic<bool>clientDataSendThreadRunningState(false);
+	clientProcessParameter.ptr_net = &net;
 
-	//传给线程的参数
-	Parameter parameterRecieve;
-	Parameter* parameterRecieve_ptr = &parameterRecieve;
-	parameterRecieve.ptr_net = &net;
-	parameterRecieve.state = &clientDataRecieveThreadRunningState;
+	clientProcessParameter.sendSignalHandle = CreateEvent(NULL, TRUE, false, NULL);//复位方式为手动恢复到无信号状态，且初始状态为无信号
 
-	Parameter parameterSend;
-	Parameter* parameterSend_ptr = &parameterSend;
-	parameterSend.ptr_net = &net;
-	parameterSend.state = &clientDataSendThreadRunningState;
-
-	//创建线程
-	HANDLE handleForRecieveThread = nullptr;
-	HANDLE handleForSendThread = nullptr;
-
-	handleForRecieveThread=CreateThread(NULL, 0, clientDataRecieveThread, parameterRecieve_ptr, 0, NULL);
-	clientDataRecieveThreadRunningState = true;
-	handleForSendThread=CreateThread(NULL, 0, clientDataSendThread, parameterSend_ptr, 0, NULL);
-	clientDataSendThreadRunningState = true;
+	clientProcessParameter.recieveThreadHandle = CreateThread(NULL, 0, clientDataRecieveThread, clientProcessParameter_ptr, 0, NULL);
+	clientProcessParameter.sendThreadHandle = CreateThread(NULL, 0, clientDataSendThread, clientProcessParameter_ptr, 0, NULL);
 
 	//等待创建的子线程结束后退出此线程
-	if (handleForRecieveThread != 0 && handleForSendThread != 0) {
+	if (clientProcessParameter.recieveThreadHandle != 0 && clientProcessParameter.sendThreadHandle != 0) {
 		while (true) {
-			if (WaitForSingleObject(handleForRecieveThread, INFINITE) == WAIT_OBJECT_0 || WaitForSingleObject(handleForSendThread, INFINITE) == WAIT_OBJECT_0) {
-				clientDataRecieveThreadRunningState = false;
-				clientDataSendThreadRunningState = false;
-				if ((WaitForSingleObject(handleForRecieveThread, INFINITE) == WAIT_OBJECT_0) && (WaitForSingleObject(handleForSendThread, INFINITE) == WAIT_OBJECT_0)) {
+			if (WaitForSingleObject(clientProcessParameter.recieveThreadHandle, INFINITE) == WAIT_OBJECT_0 || WaitForSingleObject(clientProcessParameter.sendThreadHandle, INFINITE) == WAIT_OBJECT_0) {
+				clientProcessParameter.isReceiveThreadAlive = false;
+				clientProcessParameter.isSendThreadAlive = false;
+				if ((WaitForSingleObject(clientProcessParameter.recieveThreadHandle, INFINITE) == WAIT_OBJECT_0) && (WaitForSingleObject(clientProcessParameter.sendThreadHandle, INFINITE) == WAIT_OBJECT_0)) {
 					break;
 				}
 			}
@@ -101,20 +85,22 @@ DWORD WINAPI clientProcess(LPVOID lpParameter) {
 
 //接受客户端数据处理线程
 DWORD WINAPI clientDataRecieveThread(LPVOID lpParameter) {
-	Parameter* ptr_parameter = (Parameter*)lpParameter;
-	while (*ptr_parameter->state) {
+	ClientProcessParameter* ptr_parameter = (ClientProcessParameter*)lpParameter;
+	while (ptr_parameter->destructionStatus==false) {
 		if (ptr_parameter->ptr_net->recieveData() > 0) {//接收到数据
 			std::cout << "on recv" << std::endl;
+			SetEvent(ptr_parameter->sendSignalHandle);
 			char* logFileDirectory = (char*)"./";
 			char* logFileName = (char*)"clientProcess.txt";
 			LOG log(logFileDirectory, logFileName);
 			char* str = ptr_parameter->ptr_net->getRecievedData();
 			log.print(str);
-
 		} else if (ptr_parameter->ptr_net->recieveData() == 0) {//客户端断开连接
-			*ptr_parameter->state = false;
+			ptr_parameter->destructionStatus = true;
+			break;
 		} else if (ptr_parameter->ptr_net->recieveData() < 0) {//接受异常
-			*ptr_parameter->state = false;
+			ptr_parameter->destructionStatus = true;
+			break;
 		}
 	}
 	return 0;
@@ -122,21 +108,14 @@ DWORD WINAPI clientDataRecieveThread(LPVOID lpParameter) {
 
 //向客户端发送数据处理线程
 DWORD WINAPI clientDataSendThread(LPVOID lpParameter) {
-	Parameter* ptr_parameter = (Parameter*)lpParameter;
-	while (*ptr_parameter->state) {
-
-		HANDLE eventHandle = nullptr;
-		CreateEvent(NULL, TRUE, TRUE, NULL);//复位方式为手动恢复到无信号状态，且初始状态为有信号.
-
-		//SetEvent()
-		//ResetEvent()
-
-		//TODO
-		/*
-		if () {
-			ptr_parameter->ptr_net->sendData("Hello world!");
+	ClientProcessParameter* ptr_parameter = (ClientProcessParameter*)lpParameter;
+	while (ptr_parameter->destructionStatus==false) {
+		if (ptr_parameter->sendSignalHandle != nullptr) {
+			if (WaitForSingleObject(ptr_parameter->sendSignalHandle, INFINITE) == WAIT_OBJECT_0) {
+				ptr_parameter->ptr_net->sendData("Hello world!");
+				ResetEvent(ptr_parameter->sendSignalHandle);
+			}
 		}
-		*/
 	}
 	return 0;
 }
